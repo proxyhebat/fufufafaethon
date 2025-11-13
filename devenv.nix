@@ -1,14 +1,27 @@
-{ pkgs, lib, config, inputs, ... }:
+{
+  pkgs,
+  # lib,
+  # config,
+  # inputs,
+  ...
+}:
 
 {
   # https://devenv.sh/basics/
   env.GREET = "devenv";
 
   # https://devenv.sh/packages/
-  packages = [ pkgs.git ];
+  packages = [
+    pkgs.git
+    pkgs.nodejs # node
+    pkgs.uv # python development toolchain
+    pkgs.ffmpeg # v/a utilities
+  ];
 
   # https://devenv.sh/languages/
-  # languages.rust.enable = true;
+  languages.rust.enable = true;
+  languages.python.enable = true;
+  languages.typescript.enable = true;
 
   # https://devenv.sh/processes/
   # processes.dev.exec = "${lib.getExe pkgs.watchexec} -n -- ls -la";
@@ -40,7 +53,7 @@
   '';
 
   # https://devenv.sh/git-hooks/
-  # git-hooks.hooks.shellcheck.enable = true;
+  git-hooks.hooks.rustfmt.enable = true;
 
   # See full reference at https://devenv.sh/reference/options/
 }
