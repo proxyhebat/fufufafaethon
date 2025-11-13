@@ -2,7 +2,7 @@
 
 TODOS:
 
-- [ ] Handle user inputs. For now identified inputs are YouTube Video URL, selected categories, and User Prompt.
+- [x] Handle user inputs. For now identified inputs are YouTube Video URL, selected categories, and User Prompt.
 - [ ] YouTube Downloader (using yt-dlp)
 - [ ] Audio transcription, given the extracted audio from the downloaded video (ffmpeg & openai/whisper involved).
 - [ ] Moments / gold-nuggets identification & analysis. For now just raw-dog to Google's Gemini AI begging for trend, viral, moment identification.
