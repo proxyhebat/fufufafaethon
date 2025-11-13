@@ -11,37 +11,47 @@ struct GeneratePayload {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
+#[serde(rename_all = "PascalCase")]
 enum Category {
     Podcast,
     Lifestyle,
     Vlog,
     Travel,
+    #[serde(rename = "Food & Cooking")]
     FoodCooking,
+    #[serde(rename = "Beauty & Fashion")]
     BeautyFashion,
     Fitness,
     Sports,
     Basketball,
     Soccer,
+    #[serde(rename = "American Football")]
     AmericanFootball,
+    #[serde(rename = "Marketing & Webinar")]
     MarketingWebinar,
+    #[serde(rename = "Talking Head & Speech")]
     TalkingHeadSpeech,
+    #[serde(rename = "Motivational Speech")]
     MotivationalSpeech,
     Commentary,
     Interview,
     Entertainment,
     Movies,
+    #[serde(rename = "Drama Shows")]
     DramaShows,
+    #[serde(rename = "Reality & Talk Shows")]
     RealityTalkShows,
     News,
+    #[serde(rename = "Informative & Educational")]
     InformativeEducational,
+    #[serde(rename = "Product Reviews")]
     ProductReviews,
     History,
+    #[serde(rename = "Science & Tech")]
     ScienceTech,
     Music,
     Gaming,
-    Other,
-    Custom(String),
+    Other(String),
 }
 
 impl std::fmt::Display for Category {
@@ -74,8 +84,7 @@ impl std::fmt::Display for Category {
             Category::ScienceTech => write!(f, "Science & Tech"),
             Category::Music => write!(f, "Music"),
             Category::Gaming => write!(f, "Gaming"),
-            Category::Other => write!(f, "Other"),
-            Category::Custom(s) => write!(f, "{}", s),
+            Category::Other(s) => write!(f, "{}", s),
         }
     }
 }
@@ -84,11 +93,13 @@ async fn generate_handler(Json(payload): Json<GeneratePayload>) -> impl IntoResp
     let job_id = "some_random_id";
 
     tokio::spawn(async move {
+        tracing::info!("Starting new job ({})", job_id);
+
         let mut cmd = Command::new("python");
-        cmd.arg("run");
-        cmd.arg("fufufafa.py");
+        cmd.arg("fufufafaethon.py");
+        cmd.arg(payload.video_url);
         cmd.arg(format!(
-            "--with-category {}",
+            "--categories={}",
             payload
                 .categories
                 .iter()
@@ -97,7 +108,7 @@ async fn generate_handler(Json(payload): Json<GeneratePayload>) -> impl IntoResp
                 .join(", ")
         ));
         if let Some(prompt) = payload.user_prompt {
-            cmd.arg(format!("--prompt {}", prompt));
+            cmd.arg(format!("--prompt={}", prompt));
         }
 
         let exit_status = cmd
@@ -121,6 +132,7 @@ async fn generate_handler(Json(payload): Json<GeneratePayload>) -> impl IntoResp
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    tracing_subscriber::fmt::init();
     let app = Router::new().route("/generate", post(generate_handler));
     let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await?;
     axum::serve(listener, app).await?;
