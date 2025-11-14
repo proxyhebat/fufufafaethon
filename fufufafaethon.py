@@ -1,6 +1,6 @@
 import argparse
 
-from utils import download_video, extract_audio, transcribe
+from utils import LLMClipFinder, download_video, extract_audio, transcribe
 
 
 def main():
@@ -22,9 +22,11 @@ def main():
         print("[fufufafaethon.py] No audio path supplied. Exiting program.")
         return 1
 
-    (text, segments) = transcribe(audio_path, model="turbo")
-    print("Text: ", text)
-    print("Segments: ", segments)
+    segments = transcribe(audio_path, model="turbo")
+    print("segment", segments)
+    cf = LLMClipFinder(args.api_key)
+    result = cf.find_interesting_moments(args.prompt, segments)
+    print("genai result", result)
 
 
 if __name__ == "__main__":

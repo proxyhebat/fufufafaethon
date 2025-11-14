@@ -1,0 +1,46 @@
+{
+  "clips": [
+    {
+      "start": "00:00",
+      "end": "00:12",
+      "reason": "Strong, humorous, and relatable opening statement against smart devices, setting the tone for privacy concerns. The 'bidet attack vector' line is particularly memorable and funny.",
+      "caption": "My bidet should NEVER be an attack vector! 🚽 Smart devices are a mistake. #TechHumor #Privacy #SmartHome"
+    },
+    {
+      "start": "00:56",
+      "end": "01:10",
+      "reason": "Humorous build-up to the reveal of the country receiving data, playing on common knowledge and ending with a direct, impactful statement: 'It's China. It's always China.'",
+      "caption": "Wonder where your smart device data goes? 🤔🌍 It's China. It's ALWAYS China. #DataPrivacy #SmartDevices #Geopolitics"
+    },
+    {
+      "start": "01:10",
+      "end": "01:20",
+      "reason": "The shocking and immediate consequence of blocking data transmission, highlighting the manufacturer's control and the device's dependency on sending data. High 'wait, what?' factor.",
+      "caption": "I blocked my smart vacuum's spying IP, and within days... it stopped working. 🤯 They're watching! #IoT #TechScandal #Privacy"
+    },
+    {
+      "start": "02:46",
+      "end": "02:58",
+      "reason": "This segment explicitly explains the core revelation: the manufacturer remotely killed a purchased device because the owner stopped data collection. It's infuriating and a powerful warning.",
+      "caption": "My smart vacuum was REMOTELY KILLED by the manufacturer just because I stopped their data collection! Do you really own your devices? #ConsumerRights #SmartHome #BigTech"
+    },
+    {
+      "start": "02:58",
+      "end": "03:06",
+      "reason": "A stark, humorous, and memorable summary of the dilemma faced by smart device owners: privacy or convenience. Highly quotable and relatable.",
+      "caption": "Your smart device dilemma: Let them spy on you, or enjoy privacy in a house filled with Dorito crumbs. 😂 #PrivacyMatters #TechTruth #SmartDevices"
+    },
+    {
+      "start": "03:47",
+      "end": "04:07",
+      "reason": "The sarcastic 'happy ending' revealing the absurd effort ('weaponized autism') required to make a smart device function normally and privately. Very memorable and likely to spark discussion.",
+      "caption": "It takes 'weaponized autism' just to make a smart device behave normally and privately. 🤖🤦\u200d♂️ What a world we live in. #IoT #TechHumor #Privacy"
+    },
+    {
+      "start": "04:14",
+      "end": "04:20",
+      "reason": "A concise, impactful summary of the hidden costs of smart devices. 'Convenience, hidden surveillance' is a powerful, quotable phrase.",
+      "caption": "Lessons from smart devices: 'Convenience, hidden surveillance.' Think twice before buying that cheap smart gadget. 💸👀 #Security #SmartTech #Privacy"
+    }
+  ]
+}

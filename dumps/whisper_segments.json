@@ -1,0 +1,344 @@
+[
+  {
+    "start": 0.0,
+    "end": 6.42,
+    "text": " Smart devices are a mistake. My kids' toys, they don't need Wi-Fi. I don't want a fridge that can",
+    "words": []
+  },
+  {
+    "start": 6.42,
+    "end": 12.280000000000001,
+    "text": " send emails. My bidet should never be an attack vector. Despite all the dangers with smart devices,",
+    "words": []
+  },
+  {
+    "start": 12.44,
+    "end": 17.1,
+    "text": " people just keep buying more and more of them every year. There are billions of connections.",
+    "words": []
+  },
+  {
+    "start": 17.36,
+    "end": 21.54,
+    "text": " And the worst part is, it's not just hackers you have to worry about. You have to worry about",
+    "words": []
+  },
+  {
+    "start": 21.54,
+    "end": 28.26,
+    "text": " manufacturers. And that brings us to today's wild story by Harashanker, aka Co. DeTiger.",
+    "words": []
+  },
+  {
+    "start": 28.26,
+    "end": 33.14,
+    "text": " The day my smart vacuum turned against me. So the story begins with Harashanker purchasing an",
+    "words": []
+  },
+  {
+    "start": 33.14,
+    "end": 40.7,
+    "text": " iLife A11 robotic vacuum. And I can't fault the guy because I had one too. I have a robot vacuum.",
+    "words": []
+  },
+  {
+    "start": 40.84,
+    "end": 46.64,
+    "text": " It's the only smart device I will own. But unlike me, Harashanker is a proper autist. He was a bit",
+    "words": []
+  },
+  {
+    "start": 46.64,
+    "end": 51.02,
+    "text": " paranoid, the good kind of paranoid, and started monitoring the network traffic. And that's when",
+    "words": []
+  },
+  {
+    "start": 51.02,
+    "end": 56.96,
+    "text": " he saw a stream of packets going from his robot to a certain country halfway across the globe.",
+    "words": []
+  },
+  {
+    "start": 56.96,
+    "end": 61.120000000000005,
+    "text": " I wonder what country's halfway across the globe. I bet he's talking about Germany.",
+    "words": []
+  },
+  {
+    "start": 61.620000000000005,
+    "end": 66.14,
+    "text": " No, of course he's not talking about Germany. Those GDPR nerds would never take any data. It's",
+    "words": []
+  },
+  {
+    "start": 66.14,
+    "end": 70.88,
+    "text": " China. It's always China. So he does the only reasonable thing. He blocks that IP address,",
+    "words": []
+  },
+  {
+    "start": 70.98,
+    "end": 75.72,
+    "text": " no longer allowing logging to be sent over to that other certain country. And within a couple days,",
+    "words": []
+  },
+  {
+    "start": 76.04,
+    "end": 80.7,
+    "text": " his vacuum stops working. Huh. So he sends it off to a service center. The service center says,",
+    "words": []
+  },
+  {
+    "start": 80.78,
+    "end": 84.44,
+    "text": " hey, we fixed it. Sends it back. He quickly does a quick block on the IP address.",
+    "words": []
+  },
+  {
+    "start": 84.44,
+    "end": 89.6,
+    "text": " Vacuum only works for a couple days. It fails. Back to the service center. Comes back home fixed.",
+    "words": []
+  },
+  {
+    "start": 89.96,
+    "end": 95.25999999999999,
+    "text": " Blocks the IP. It stops working. He does this cycle enough times that he ends up going out of",
+    "words": []
+  },
+  {
+    "start": 95.25999999999999,
+    "end": 102.02,
+    "text": " warranty with his device. He now has a $300 Chinese spyware paperweight. Like, I wonder why it kept",
+    "words": []
+  },
+  {
+    "start": 102.02,
+    "end": 107.2,
+    "text": " breaking. So with nothing left to lose, he cracked open that vacuum, started tracing out the components,",
+    "words": []
+  },
+  {
+    "start": 107.32,
+    "end": 113.1,
+    "text": " and figured out that Allwinner created the vacuum. Now, Allwinner may sound like a great American",
+    "words": []
+  },
+  {
+    "start": 113.1,
+    "end": 118.11999999999999,
+    "text": " company. It's actually a fabulous semiconductor company from Zhuhai, Guangdong, China. Now,",
+    "words": []
+  },
+  {
+    "start": 118.19999999999999,
+    "end": 122.8,
+    "text": " you may have never heard of them, but they do have their chips in popular devices such as the SNES",
+    "words": []
+  },
+  {
+    "start": 122.8,
+    "end": 128.79999999999998,
+    "text": " Retro. They also have a custom Linux distribution, Tina, which has been famous for over a decade for",
+    "words": []
+  },
+  {
+    "start": 128.79999999999998,
+    "end": 133.92,
+    "text": " being filled to the brim with backdoors and GPL license violations. Direct gamers.",
+    "words": []
+  },
+  {
+    "start": 134.28,
+    "end": 139.51999999999998,
+    "text": " So Hari Shanker ends up discovering one of the plethora of backdoors in the Tina operating system.",
+    "words": []
+  },
+  {
+    "start": 139.52,
+    "end": 144.22,
+    "text": " This one particularly is the Android debug bridge, which was left open, no password,",
+    "words": []
+  },
+  {
+    "start": 144.42000000000002,
+    "end": 150.46,
+    "text": " no authentication. He SSHs into his vacuum and discovers this log. If you're not familiar with",
+    "words": []
+  },
+  {
+    "start": 150.46,
+    "end": 154.82000000000002,
+    "text": " log messages, that's fine. This is actually really simple. The only thing you need to read is this",
+    "words": []
+  },
+  {
+    "start": 154.82000000000002,
+    "end": 160.70000000000002,
+    "text": " right here, remote event. This event originates from the server sent to the vacuum and remotely",
+    "words": []
+  },
+  {
+    "start": 160.70000000000002,
+    "end": 166.56,
+    "text": " kills Hari Shanker's vacuum. That means despite the fact that he purchased the vacuum, despite the fact",
+    "words": []
+  },
+  {
+    "start": 166.56,
+    "end": 172.48,
+    "text": " that there is absolutely no words about him having to send data over, because he stopped the data",
+    "words": []
+  },
+  {
+    "start": 172.48,
+    "end": 178.8,
+    "text": " collection, the manufacturer has decided that they will, in fact, kill his vacuum. Which means you",
+    "words": []
+  },
+  {
+    "start": 178.8,
+    "end": 184.52,
+    "text": " have two options. Either you let the Chinese spy on you, or you enjoy your privacy in a house filled",
+    "words": []
+  },
+  {
+    "start": 184.52,
+    "end": 191.02,
+    "text": " with Dorito crumbs. Now, I hate this future. I do not like IoT. I don't like risking my privacy all the",
+    "words": []
+  },
+  {
+    "start": 191.02,
+    "end": 195.98000000000002,
+    "text": " time. And I think the thing that makes me most upset about this future is every single time I buy a",
+    "words": []
+  },
+  {
+    "start": 195.98,
+    "end": 201.98,
+    "text": " smart device. I have to go into full red team mode and figure out, is it sending data? Was it it? What",
+    "words": []
+  },
+  {
+    "start": 201.98,
+    "end": 206.6,
+    "text": " is it taking from me? Will it just be remotely turned off because they don't like what I'm doing",
+    "words": []
+  },
+  {
+    "start": 206.6,
+    "end": 212.28,
+    "text": " with it? Will a hacker be able to spy on my family because I decided to buy my child a Barbie? The whole",
+    "words": []
+  },
+  {
+    "start": 212.28,
+    "end": 217.44,
+    "text": " point of these smart devices is that I'm supposed to save time. I'm not supposed to have to worry about",
+    "words": []
+  },
+  {
+    "start": 217.44,
+    "end": 222.48,
+    "text": " vacuuming. Instead, you're going to spend all of your time ensuring that you're not being spied on.",
+    "words": []
+  },
+  {
+    "start": 222.48,
+    "end": 227.34,
+    "text": " Now, I know a lot of the smart device stories don't end well, but this one does end well. Yes,",
+    "words": []
+  },
+  {
+    "start": 227.92,
+    "end": 233.78,
+    "text": " the heart shanker may have lost his warranty, but he did gain a vacuum that works offline that has no",
+    "words": []
+  },
+  {
+    "start": 233.78,
+    "end": 240.56,
+    "text": " cloud that has no tracking. Yeah. So he just has a normal vacuum that can vacuum his house for him.",
+    "words": []
+  },
+  {
+    "start": 240.64,
+    "end": 247.0,
+    "text": " This is the world we live in. It requires full weaponized autism just to have a smart device behave",
+    "words": []
+  },
+  {
+    "start": 247.0,
+    "end": 253.72,
+    "text": " in a normal way. And I do love his lessons learned. Smart usually implies a lack of control.",
+    "words": []
+  },
+  {
+    "start": 254.06,
+    "end": 259.22,
+    "text": " Cheap signifies compromise and security. Convenience, hidden surveillance. And I do love",
+    "words": []
+  },
+  {
+    "start": 259.22,
+    "end": 264.6,
+    "text": " his golden rule, which is never use your primary Wi-Fi, which is hilarious because this robot was",
+    "words": []
+  },
+  {
+    "start": 264.6,
+    "end": 271.3,
+    "text": " sending unencrypted Wi-Fi credentials to that country halfway across the world. So would you let a",
+    "words": []
+  },
+  {
+    "start": 271.3,
+    "end": 277.1,
+    "text": " stranger into your house with the camera? Well, it seems like that's what our world is racing towards.",
+    "words": []
+  },
+  {
+    "start": 277.24,
+    "end": 283.32,
+    "text": " I know I won't be participating in that. Hey, press like, press subscribe. I'm so close to a million",
+    "words": []
+  },
+  {
+    "start": 283.32,
+    "end": 311.06,
+    "text": " at this point. Hey, do you want to learn how to code? Do you want to become a better back-end",
+    "words": []
+  },
+  {
+    "start": 311.06,
+    "end": 315.12,
+    "text": " engineer? Well, you got to check out boot.dev. Now I personally have made a couple courses from",
+    "words": []
+  },
+  {
+    "start": 315.12,
+    "end": 320.62,
+    "text": " them. I have live walkthroughs free available on YouTube of the whole course, everything on boot.dev.",
+    "words": []
+  },
+  {
+    "start": 320.72,
+    "end": 325.52,
+    "text": " You can go through for free, but if you want the gamified experience, the tracking of your learning",
+    "words": []
+  },
+  {
+    "start": 325.52,
+    "end": 329.68,
+    "text": " and all that, then you got to pay up the money, but Hey, go check them out. It's awesome. Many content",
+    "words": []
+  },
+  {
+    "start": 329.68,
+    "end": 335.22,
+    "text": " creators, you know, and you like make courses there boot.dev slash prime for 25% off.",
+    "words": []
+  }
+]

@@ -94,7 +94,6 @@ async fn generate_handler(Json(payload): Json<GeneratePayload>) -> impl IntoResp
 
     tokio::spawn(async move {
         tracing::info!("Starting new job ({})", job_id);
-
         let mut cmd = Command::new("python");
         cmd.arg("fufufafaethon.py");
         cmd.arg(payload.video_url);
@@ -107,9 +106,13 @@ async fn generate_handler(Json(payload): Json<GeneratePayload>) -> impl IntoResp
                 .collect::<Vec<String>>()
                 .join(", ")
         ));
+
         if let Some(prompt) = payload.user_prompt {
             cmd.arg(format!("--prompt={}", prompt));
         }
+        if let Ok(api_key) = std::env::var("GOOGLE_GENAI_API_KEY") {
+            cmd.arg(format!("--api-key={}", api_key));
+        };
 
         let exit_status = cmd
             .spawn()
@@ -132,9 +135,12 @@ async fn generate_handler(Json(payload): Json<GeneratePayload>) -> impl IntoResp
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    dotenvy::dotenv()?;
     tracing_subscriber::fmt::init();
+
     let app = Router::new().route("/generate", post(generate_handler));
     let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await?;
+
     axum::serve(listener, app).await?;
     Ok(())
 }
