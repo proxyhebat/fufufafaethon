@@ -1,5 +1,7 @@
 # Minimal video repurposing implementation
 
+![Screenshot 2025-11-14 at 7 50 14 am](https://github.com/user-attachments/assets/c23f5f17-cdee-4d09-802e-68e835e2383c)
+
 ## Table of Contents
 
 - [Development Environment Setup](#development-environment-setup)
