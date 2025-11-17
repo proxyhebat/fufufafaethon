@@ -9,7 +9,7 @@ curl -X POST http://localhost:8080/generate \
 or can be use directly:
 
 ```sh
-python fufufafaethon https://www.youtube.com/watch?v=Z3VlbKcE5nE \
+uv run fufufafaethon.py "This just makes me so mad.mp4" \
     --api-key="$GOOGLE_GENAI_API_KEY" \
     --prompt="viral potentials" \
     --categories="Science & Tech, Informative & Educational"

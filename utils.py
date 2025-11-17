@@ -2,7 +2,7 @@ import os
 import subprocess
 
 import google.generativeai as genai
-import whisper
+import whisper_timestamped as whisper
 import yt_dlp
 
 
@@ -65,26 +65,13 @@ def extract_audio(video_path):
     return output_path
 
 
-def transcribe(audio_path, model):
+def transcribe(filename, model):
     print(f"Loading Whisper model: {model}")
-    model = whisper.load_model(model)
+    audio = whisper.load_audio(filename)
+    model = whisper.load_model(model, device="cpu")
+    result = whisper.transcribe(model, audio)
 
-    print(f"Transcribing {audio_path} using whisper {model}")
-    result = model.transcribe(audio_path)
-
-    # Extract segments
-    segments = []
-    for segment in result["segments"]:
-        segments.append(
-            {
-                "start": segment["start"],
-                "end": segment["end"],
-                "text": segment["text"],
-                "words": segment.get("words", []),
-            }
-        )
-
-    return segments
+    return result
 
 
 class LLMClipFinder:

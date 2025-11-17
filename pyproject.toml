@@ -6,13 +6,14 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "google-generativeai>=0.8.5",
-    "openai-whisper",
-    "yt-dlp",
+    "moviepy>=2.2.1",
+    "validators>=0.35.0",
+    "whisper-timestamped>=1.15.9",
+    "yt-dlp>=2025.11.12",
 ]
 
 [tool.ruff]
 line-length = 120
 
 [tool.uv.sources]
-openai-whisper = { git = "https://github.com/openai/whisper.git" }
 yt-dlp = { git = "https://github.com/yt-dlp/yt-dlp" }

@@ -16,6 +16,7 @@
     pkgs.nodejs # node
     pkgs.uv # python development toolchain
     pkgs.ffmpeg # v/a utilities
+    pkgs.imagemagick
   ];
 
   # https://devenv.sh/languages/
