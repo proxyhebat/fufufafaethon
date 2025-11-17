@@ -91,37 +91,50 @@ impl std::fmt::Display for Category {
 
 async fn generate_handler(Json(payload): Json<GeneratePayload>) -> impl IntoResponse {
     let job_id = "some_random_id";
+    tracing::info!("Received generate request for video: {}", payload.video_url);
+    tracing::info!("Categories: {:?}", payload.categories);
+    tracing::info!("User prompt: {:?}", payload.user_prompt);
 
     tokio::spawn(async move {
         tracing::info!("Starting new job ({})", job_id);
         let mut cmd = Command::new("python");
         cmd.arg("fufufafaethon.py");
-        cmd.arg(payload.video_url);
-        cmd.arg(format!(
-            "--categories={}",
-            payload
-                .categories
-                .iter()
-                .map(|x| x.to_string())
-                .collect::<Vec<String>>()
-                .join(", ")
-        ));
+        cmd.arg(&payload.video_url);
 
-        if let Some(prompt) = payload.user_prompt {
+        let categories_str = payload
+            .categories
+            .iter()
+            .map(|x| x.to_string())
+            .collect::<Vec<String>>()
+            .join(", ");
+        tracing::debug!("Categories string: {}", categories_str);
+        cmd.arg(format!("--categories={}", categories_str));
+
+        if let Some(prompt) = &payload.user_prompt {
+            tracing::debug!("Adding prompt argument: {}", prompt);
             cmd.arg(format!("--prompt={}", prompt));
         }
+
         if let Ok(api_key) = std::env::var("GOOGLE_GENAI_API_KEY") {
+            tracing::debug!("Using API key from environment");
             cmd.arg(format!("--api-key={}", api_key));
+        } else {
+            tracing::warn!("No GOOGLE_GENAI_API_KEY found in environment");
         };
 
+        tracing::info!("Spawning Python process for job {}", job_id);
         let exit_status = cmd
             .spawn()
-            .expect("Failed to start")
+            .expect("Failed to start Python process")
             .wait()
             .await
-            .expect("Failed to run");
+            .expect("Failed to run Python process");
 
-        println!("TODO: handle the exit status {}", exit_status);
+        if exit_status.success() {
+            tracing::info!("Job {} completed successfully", job_id);
+        } else {
+            tracing::error!("Job {} failed with exit code: {}", job_id, exit_status);
+        }
     });
 
     Json(serde_json::json!(
@@ -138,9 +151,13 @@ async fn main() -> anyhow::Result<()> {
     dotenvy::dotenv()?;
     tracing_subscriber::fmt::init();
 
+    tracing::info!("Starting fufufafaethon server");
     let app = Router::new().route("/generate", post(generate_handler));
+
     let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await?;
+    tracing::info!("Server listening on 0.0.0.0:8080");
 
     axum::serve(listener, app).await?;
+    tracing::info!("Server shutdown");
     Ok(())
 }

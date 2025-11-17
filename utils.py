@@ -1,9 +1,14 @@
+import logging
 import os
 import subprocess
 
 import google.generativeai as genai
 import whisper_timestamped as whisper
 import yt_dlp
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logger = logging.getLogger(__name__)
 
 
 def progress(d):
@@ -14,64 +19,92 @@ def progress(d):
 
 
 def download_video(video_url, output_dir=None):
+    logger.info(f"Starting video download from URL: {video_url}")
     if output_dir is None:
         output_dir = os.getcwd()
+    output_template = os.path.join(output_dir, "%(title)s.%(ext)s")
+    logger.debug(f"Output directory: {output_dir}, template: {output_template}")
 
-        output_template = os.path.join(output_dir, "%(title)s.%(ext)s")
-
-        try:
-            with yt_dlp.YoutubeDL(
-                {  # options
-                    "format": "best",
-                    "outtmpl": output_template,
-                    "noplaylist": True,
-                    "quiet": True,
-                    "progress_hooks": [progress],
-                }
-            ) as ydl:
-                info_dict = ydl.extract_info(video_url, download=True)
-                if "filepath" in info_dict:
-                    return info_dict["filepath"]
-                else:
-                    file_name = ydl.prepare_filename(info_dict)
-                    return os.path.join(output_dir, file_name)
-        except:
-            print("Error downloading video")
-            return None
+    try:
+        logger.info("Initializing yt-dlp downloader")
+        with yt_dlp.YoutubeDL(
+            {  # options
+                "format": "best",
+                "outtmpl": output_template,
+                "noplaylist": True,
+                "quiet": True,
+                "progress_hooks": [progress],
+            }
+        ) as ydl:
+            logger.info("Extracting video info and downloading")
+            info_dict = ydl.extract_info(video_url, download=True)
+            if "filepath" in info_dict:
+                filepath = info_dict["filepath"]
+                logger.info(f"Video downloaded successfully to: {filepath}")
+                return filepath
+            else:
+                file_name = ydl.prepare_filename(info_dict)
+                filepath = os.path.join(output_dir, file_name)
+                logger.info(f"Video downloaded successfully to: {filepath}")
+                return filepath
+    except Exception as e:
+        logger.error(f"Error downloading video: {str(e)}")
+        return None
 
 
 def extract_audio(video_path):
-    print(f"extracting {video_path}")
+    logger.info(f"Starting audio extraction from video: {video_path}")
     output_path = f"{video_path}.wav"
+    logger.debug(f"Output audio path: {output_path}")
+
     cmd = f"ffmpeg -i '{video_path}' -ab 160k -ac 2 -ar 44100 -vn {output_path} -y"
-    print(f"running command `{cmd}`")
-    subprocess.run(
-        [
-            "ffmpeg",
-            "-i",
-            video_path,
-            "-ab",
-            "160k",
-            "-ac",
-            "2",
-            "-ar",
-            "44100",
-            "-vn",
-            output_path,
-            "-y",
-        ],
-        check=True,
-    )
-    return output_path
+    logger.info(f"Running ffmpeg command: {cmd}")
+
+    try:
+        subprocess.run(
+            [
+                "ffmpeg",
+                "-i",
+                video_path,
+                "-ab",
+                "160k",
+                "-ac",
+                "2",
+                "-ar",
+                "44100",
+                "-vn",
+                output_path,
+                "-y",
+            ],
+            check=True,
+        )
+        logger.info(f"Audio extraction completed successfully: {output_path}")
+        return output_path
+    except subprocess.CalledProcessError as e:
+        logger.error(f"Audio extraction failed with exit code {e.returncode}")
+        raise
 
 
 def transcribe(filename, model):
-    print(f"Loading Whisper model: {model}")
-    audio = whisper.load_audio(filename)
-    model = whisper.load_model(model, device="cpu")
-    result = whisper.transcribe(model, audio)
+    logger.info(f"Starting transcription for file: {filename} using model: {model}")
 
-    return result
+    try:
+        logger.info("Loading audio file")
+        audio = whisper.load_audio(filename)
+        logger.info("Audio loaded successfully")
+
+        logger.info(f"Loading Whisper model: {model}")
+        model = whisper.load_model(model, device="cpu")
+        logger.info("Whisper model loaded successfully")
+
+        logger.info("Starting transcription process")
+        result = whisper.transcribe(model, audio)
+        logger.info(f"Transcription completed. Found {len(result['segments'])} segments")
+
+        return result
+    except Exception as e:
+        logger.error(f"Transcription failed: {str(e)}")
+        raise
 
 
 class LLMClipFinder:
@@ -79,27 +112,33 @@ class LLMClipFinder:
 
     def __init__(self, api_key=None, model="gemini-2.5-flash"):
         """Initialize with optional API key (for Google Gemini)"""
+        logger.info(f"Initializing LLMClipFinder with model: {model}")
         self.api_key = api_key or os.getenv("GEMINI_API_KEY")
         self.model_name = model
 
         if not self.api_key:
-            print("No Google Gemini API key found. Falling back to alternate method.")
+            logger.warning("No Google Gemini API key found. Falling back to alternate method.")
             self.use_gemini = False
             return
 
         # Configure the Gemini API client
         try:
+            logger.info("Configuring Gemini API client")
             genai.configure(api_key=self.api_key)
             self.model = genai.GenerativeModel(self.model_name)
             self.use_gemini = True
+            logger.info("Gemini API client initialized successfully")
         except Exception as e:
-            print(f"Failed to initialize Gemini API: {e}")
+            logger.error(f"Failed to initialize Gemini API: {e}")
             self.use_gemini = False
 
     def find_interesting_moments(self, user_prompt, transcription_segments, min_clips=3, max_clips=10):
         """Use LLM to identify interesting moments from transcription segments"""
+        logger.info(f"Finding interesting moments with prompt: '{user_prompt}'")
+        logger.info(f"Processing {len(transcription_segments)} transcription segments")
 
         # Format the transcription data for the LLM
+        logger.debug("Formatting transcription data for LLM")
         transcript_text = ""
         for _, segment in enumerate(transcription_segments):
             start_time = self._format_time(segment["start"])
@@ -137,15 +176,19 @@ Format your response as JSON with this structure:
 """
 
         if self.use_gemini:
+            logger.info("Using Gemini API for clip finding")
             return self._call_gemini_api(prompt)
         else:
+            logger.info("Using fallback extraction method")
             return self._fallback_extraction(transcription_segments)
 
     def _call_gemini_api(self, prompt):
         """Call Gemini API with proper error handling"""
+        logger.info("Calling Gemini API")
         try:
             response = self.model.generate_content(prompt)
             content = response.text
+            logger.debug("Gemini API call successful")
 
             # Try to parse the JSON from the response
             try:
@@ -165,7 +208,8 @@ Format your response as JSON with this structure:
                 return self._manually_extract_clips(content)
 
         except Exception as e:
-            print(f"Error calling Gemini API: {str(e)}")
+            logger.error(f"Error calling Gemini API: {str(e)}")
+            logger.info("Falling back to manual extraction")
             return self._fallback_extraction(self.transcription_segments)
 
     def _manually_extract_clips(self, content):
